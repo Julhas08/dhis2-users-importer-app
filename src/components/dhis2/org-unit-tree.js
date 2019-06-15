@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import Card from 'material-ui/Card/Card';
 import CardText from 'material-ui/Card/CardText';
 import SingleSelection from './org-unit-tree/single-selection';
-import WhonetController from '../../controllers/WhonetController';
-
+import UsersImportController from '../../controllers/UsersImportController';
+import * as config  from '../../config/Config';
+import { 
+    getListofUsers,
+    getUserDetails
+} from '../api/API';
+import * as styleProps  from '../ui/Styles';
+import LinearProgress from '../ui/LinearProgress';
 const styles = {
 	card: {
 		margin: 16,
-        width: 350,
-		minHeight: 300,
+        width: 400,
+		minHeight: 410,
 		float: 'left',
 		transition: 'all 175ms ease-out',
 	},
@@ -48,6 +53,7 @@ export default class OrgUnitTreeComponent extends React.Component {
             listDataFromChild: null,
             userOrgUnitId  : '',
             userOrgUnitName: '',
+            usersInfo: [],
 		};
 
 		const childFields = 'id,path,displayName,children::isNotEmpty';
@@ -66,8 +72,8 @@ export default class OrgUnitTreeComponent extends React.Component {
 				})
 			})
 			.then(() => Promise.all([
-				d2.models.organisationUnits.get('ANGhR1pa8I5', { fields: childFields }),
-				d2.models.organisationUnits.get('ANGhR1pa8I5', { fields: childFields }),
+				d2.models.organisationUnits.get(config.rootOrgId, { fields: childFields }),
+				d2.models.organisationUnits.get(config.rootOrgId, { fields: childFields }),
                 /*d2.models.organisationUnits.get('at6UHUQatSo', { fields: childFields }),
                 d2.models.organisationUnits.get('fdc6uOvgoji', { fields: childFields }),*/
 				d2.models.organisationUnits.list({
@@ -97,7 +103,25 @@ export default class OrgUnitTreeComponent extends React.Component {
 
 	}
     orgUnitCallback = (dataFromChild) => {
+    	
         if(typeof dataFromChild !== undefined || dataFromChild !==null){
+        	getListofUsers(dataFromChild).then((usersInfo)=>{
+        	let userList = [];
+            usersInfo.data.users.map(userId => {
+            	
+                getUserDetails(userId.id).then((userDetail) =>{
+                	userList.push(userDetail.data);
+                	this.setState({ usersInfo: userList });
+
+                });
+                
+            })/*
+            console.log("userList: ", userList);
+            console.log("userList: ", userList.length);*/
+             
+        	});
+
+        	 
             const childFields = 'id,path,displayName,children::isNotEmpty';
                this.state.d2.models.organisationUnits
                 .list({
@@ -126,7 +150,6 @@ export default class OrgUnitTreeComponent extends React.Component {
 		if (!root || !roots || !preRoot) {
 			return null;
 		}
-
 		return (
             <div>
                 <Card style={styles.card}>
@@ -135,8 +158,8 @@ export default class OrgUnitTreeComponent extends React.Component {
                         <SingleSelection root={root} callbackFromParent={this.orgUnitCallback} />
                     </CardText>
                 </Card>
-                <WhonetController d2={this.state.d2} orgUnitId={this.state.userOrgUnitId} orgUnit={this.state.userOrgUnitName}/>
-
+                <UsersImportController usersInfo = {this.state.usersInfo} d2={this.state.d2} orgUnitId={this.state.userOrgUnitId} orgUnit={this.state.userOrgUnitName}/>
+                
             </div>
 		);
 	}

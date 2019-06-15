@@ -1,0 +1,26 @@
+# Select org unit 
+# Extract all below level org units under the selected one
+# Create a json payload: 
+
+{
+  "id": "qTPEeaICy2R",
+  "firstName": "John",
+  "surname": "Doe",
+  "email": "johndoe@mail.com",
+  "userCredentials": {
+    "userInfo": { "id": "mIJv1aK1j5A" },
+    "username": "julhas",
+    "password": "DGHS@1234#",
+    "userRoles": [ {
+      "id": "22syrkUpfij"
+    } ]
+  },
+  "organisationUnits": [ {
+    "id": "2NLjKwsVjod"
+  } ],
+  "userGroups": [ {
+    "id": "2kSiKmOzhSX"
+  } ]
+}
+
+# 

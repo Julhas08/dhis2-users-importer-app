@@ -1,4 +1,4 @@
-## DHIS2 Users AMR Importer App
+## DHIS2 Users Importer App
 
 In the project directory, you can run:
 

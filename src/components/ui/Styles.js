@@ -1,8 +1,16 @@
 export const styles = {
   card: {
     margin: 16,
-    width: 550,
-    minHeight: 300,
+    width: 800,
+    minHeight: 410,
+    float: 'left',
+    transition: 'all 175ms ease-out',
+  },
+  
+  cardUsers: {
+    margin: 16,
+        width: 1200,
+    minHeight: 400,
     float: 'left',
     transition: 'all 175ms ease-out',
   },
