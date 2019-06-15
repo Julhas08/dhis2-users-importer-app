@@ -1,6 +1,6 @@
 {
-    "name": "WHONET DATA IMPORTER",
-    "description": "To import whonet data",
+    "name": "DHIS2 Users Importer App",
+    "description": "DHIS2 Users Importer App",
     "version": "1.0",
     "appType": "APP",
     "launch_path": "./index.html",
@@ -17,6 +17,6 @@
         "company": "UiO"
     },
     "icons": {
-        "48": "./whonet.jpg"
+        "48": "./users.png"
     }
 }

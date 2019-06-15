@@ -1,5 +1,5 @@
 {
-  "name": "whonet-importer",
+  "name": "dhis2-users-importer-app",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
